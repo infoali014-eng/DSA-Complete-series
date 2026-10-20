@@ -86,16 +86,131 @@ public:
 		cout << ptr[1][2][1] << endl;
 	}
 };
+struct node {
+	int data;
+	node* next;
+};
+class SingleLinkedList {
+	public:
+		node* head;
+		SingleLinkedList() {
+			head = NULL;
+		}
+	void InsertAtStart(int value){
+		node* newNode = new node;
+		newNode->data = value;
+		newNode->next = head;
+		head = newNode;
+	}
+	void InsertAtEnd(int value) {
+
+		node* newnode = new node;//Creates node
+
+		newnode->data = value;//Assigns value
+		newnode->next = NULL;//make next of last node NULL
+
+		//set head if node is created ones
+		if (head == NULL) {
+			head = newnode;
+			return;
+		}
+
+		node* temp = head;
+
+		while (temp->next != NULL) {
+			temp = temp->next;
+		}
+		temp->next = newnode;//join next node to the previous
+		
+	}
+	void InsertAtSpecificPosition(int value, int pos) {
+		node* newnode = new node;
+		if (pos < 1) {
+			cout << "Invalid Position" << endl;
+			return;
+		}
+		if (pos == 1) {
+			InsertAtStart(value);
+			return;
+		}
+		node* temp = head;
+		int i = 1;
+		while (i < pos - 1 && temp->next != NULL) {
+			temp = temp->next;
+			i++;
+		}
+		newnode->data = value;
+		newnode->next = temp->next;
+		temp->next = newnode;
+	}
+	void Display() {
+		node* temp = head;
+		while (temp != NULL) {
+			cout << temp->data << " ";
+			temp = temp->next;
+		}
+	}
+};
+
+class Recursion {
+public:
+
+};
 
 int main()
 {
 	Pointer ptr;
 
+	SingleLinkedList l1;
+	l1.InsertAtEnd(10);
+	l1.InsertAtEnd(20);
+	l1.InsertAtEnd(30);
+	l1.InsertAtSpecificPosition(25, 4);
+	l1.Display();
+
 	// Call methods via object
 	//ptr.BasicPointer();
 	//ptr.PointerToArray();
-	ptr.PointersIn2DArray();
-	ptr.PointersIn3DArrays();
+	//ptr.PointersIn2DArray();
+	//ptr.PointersIn3DArrays();
 
 	return 0;
+}
+
+//UNION
+#include <iostream>
+using namespace std;
+
+struct node {
+	int data;
+	node* next;
+};
+
+bool Contains(node* head, int value) {
+	node* temp = head;
+
+	while (temp != NULL) {
+		if (temp->data == value) {
+			return true;
+		}
+
+		temp = temp->next;
+	}
+
+	return false;
+}
+
+void Append(node*& head, node*& tail, int value) {
+	node* newnode = new node;
+	newnode->data = value;
+	newnode->next = NULL;
+
+	if (head == NULL) {
+		head = newnode;
+		tail = newnode;
+	}
+	else {
+		tail->next = newnode;
+		tail = newnode;
+	}
 }
